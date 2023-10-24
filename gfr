@@ -1,0 +1,78 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class PetDisplayApp {
+    private JFrame frame;
+    private JPanel panel;
+    private JLabel label;
+    private JRadioButton catRadioButton;
+    private JRadioButton pigRadioButton;
+    private JRadioButton dogRadioButton;
+    private JRadioButton rabbitRadioButton;
+    private JRadioButton birdRadioButton;
+    
+    public PetDisplayApp() {
+        frame = new JFrame("Pet Display");
+        panel = new JPanel();
+        label = new JLabel("Select a pet to display:");
+        catRadioButton = new JRadioButton("Cat");
+        pigRadioButton = new JRadioButton("Pig");
+        dogRadioButton = new JRadioButton("Dog");
+        rabbitRadioButton = new JRadioButton("Rabbit");
+        birdRadioButton = new JRadioButton("Bird");
+        
+        // Create a ButtonGroup to ensure only one radio button is selected at a time
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(catRadioButton);
+        buttonGroup.add(pigRadioButton);
+        buttonGroup.add(dogRadioButton);
+        buttonGroup.add(rabbitRadioButton);
+        buttonGroup.add(birdRadioButton);
+        
+        // Add action listeners to the radio buttons
+        catRadioButton.addActionListener(new PetSelectionListener("Cat"));
+        pigRadioButton.addActionListener(new PetSelectionListener("Pig"));
+        dogRadioButton.addActionListener(new PetSelectionListener("Dog"));
+        rabbitRadioButton.addActionListener(new PetSelectionListener("Rabbit"));
+        birdRadioButton.addActionListener(new PetSelectionListener("Bird"));
+        
+        // Add components to the panel
+        panel.add(label);
+        panel.add(catRadioButton);
+        panel.add(pigRadioButton);
+        panel.add(dogRadioButton);
+        panel.add(rabbitRadioButton);
+        panel.add(birdRadioButton);
+        
+        // Set up the frame
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(panel);
+        frame.pack();
+        frame.setVisible(true);
+    }
+    
+    // ActionListener for the radio buttons
+    class PetSelectionListener implements ActionListener {
+        private String petName;
+        
+        public PetSelectionListener(String name) {
+            this.petName = name;
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Update the label to display the selected pet
+            label.setText("You selected a " + petName);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new PetDisplayApp();
+            }
+        });
+    }
+}
